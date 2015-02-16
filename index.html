@@ -97,6 +97,7 @@ Add ApiConstraints for header based version control. <br>
 If no version is explicitly requested, fall back to V1.
 
 <pre><code>
+
 #lib/api_constraints.rb
 
 class ApiConstraints
@@ -119,6 +120,9 @@ end
 Create a widget resources route under the API namespace.
 <pre><code>
 
+#config/routes.rb
+
+
 namespace :api, defaults: {format: :json} do
 
   scope module: :v1, constraints: ApiConstraints.new(version: 1, default: :true) do
@@ -126,6 +130,7 @@ namespace :api, defaults: {format: :json} do
   end
 
 end
+
 </code></pre>
 <br>
 
@@ -185,6 +190,8 @@ group :development, :test do
 
 
 end
+</code></pre>
+<pre><code>
 
 $ bundle
 
