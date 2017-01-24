@@ -80,7 +80,6 @@ $ bundle exec rake db:test:prepare
 Ensure Rails autoloads /lib/* 
 
 <pre><code>
-
 #config/application.rb
 
 
@@ -100,7 +99,6 @@ Add ApiConstraints for header based version control. <br>
 If no version is explicitly requested, fall back to V1.
 
 <pre><code>
-
 #lib/api_constraints.rb
 
 class ApiConstraints
@@ -122,7 +120,6 @@ end
 
 Create a widget resources route under the API namespace.
 <pre><code>
-
 #config/routes.rb
 
 
@@ -133,7 +130,6 @@ namespace :api, defaults: {format: :json} do
   end
 
 end
-
 </code></pre>
 <br>
 
@@ -148,7 +144,6 @@ rails g serializer widget
 Add appropriate fields to the widget serializer.
 
 <pre><code>
-
 #app/serializers/widget_serializer.rb
 
 class WidgetSerializer < ActiveModel::Serializer
@@ -163,7 +158,6 @@ end
 <h4>Controller</h4>
 
 <pre><code>
-
 #app/controllers/api/v1/widgets_controller.rb 
 
 class Api::V1::WidgetsController < ApplicationController
@@ -195,9 +189,7 @@ group :development, :test do
 end
 </code></pre>
 <pre><code>
-
 $ bundle
-
 </code></pre>
 <br>
 
@@ -240,7 +232,6 @@ class MiniTest::Spec
   end
  
 end
-
 </code></pre>
 <br>
 
@@ -251,7 +242,6 @@ end
 Create a skeleton test for the Widget API.
 
 <pre><code>
-
 #test/integration/widget_api_integration_test.rb
 
 require "minitest_helper"
@@ -306,7 +296,6 @@ end
 
 Controller
 <pre><code>
-
 class Api::V1::WidgetsController < ApplicationController
 
 
@@ -324,7 +313,6 @@ class Api::V1::WidgetsController < ApplicationController
 
 Integration Test
 <pre><code>
-
     it "should list widgets index" do 
 
                 widget_creation_count = 22
@@ -363,7 +351,6 @@ Controller
 
 Integration Test
 <pre><code>
-
     it "should get a widget with expected keys" do
 
         widget =  FactoryGirl.create(:widget)
@@ -386,7 +373,6 @@ Controller<nr>
 <br>
 - Uses strong_params to prevent mass assignment attacks.
 <pre><code>
-
     def create
 
         widget = Widget.new(widgets_params_create)
@@ -413,12 +399,10 @@ private
     permitable_params = [:supplier, :cost]
     params.require(:widget).permit(permitable_params)
   end
-
 </code></pre>
 <br>
 Integration Test
 <pre><code>
-
     it "should create a new widget" do
 
         widget = { name: 'widgee', supplier: 'widgsoft', cost: 32 }
@@ -437,7 +421,6 @@ Integration Test
 
 Controller
 <pre><code>
-
     def update
 
         widget = Widget.find(params[:id])
@@ -450,7 +433,6 @@ Controller
 
 
     end
-
 </code></pre>
 <br>
 
@@ -505,9 +487,6 @@ Controller<nr>
 - Demonstrates use of auth_token to prevent unauthorized deletion.<br>
 
 <pre><code>
-
-
-
     def destroy
 
         return head :unauthorized unless (params.has_key?('auth_token') && params[:auth_token] == 's3cr3t')
