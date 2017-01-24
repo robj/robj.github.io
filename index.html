@@ -290,10 +290,9 @@ Create a Widget factory
 FactoryGirl.define do
 
   factory :widget do
-
-        name {"#{RandomWord.adjs.next}"}
-        supplier {"#{RandomWord.adjs.next} Supplier"}
-        cost {(1..99).to_a.sample}
+    name {"#{RandomWord.adjs.next}"}
+    supplier {"#{RandomWord.adjs.next} Supplier"}
+    cost {(1..99).to_a.sample}
   end
 
 
@@ -312,10 +311,8 @@ class Api::V1::WidgetsController < ApplicationController
 
 
     def index
-
-        widgets = Widget.all
-        render json: widgets
-
+      widgets = Widget.all
+      render json: widgets
     end
 
     ...
@@ -355,13 +352,9 @@ Controller
         widget = Widget.find(params[:id])
 
         if widget
-                
-            render json: widget
-
+          render json: widget
         else
-
-            head :not_found
-
+          head :not_found
         end
 
     end
@@ -372,7 +365,6 @@ Integration Test
 <pre><code>
 
     it "should get a widget with expected keys" do
-
 
         widget =  FactoryGirl.create(:widget)
 
@@ -397,19 +389,13 @@ Controller<nr>
 
     def create
 
-
         widget = Widget.new(widgets_params_create)
 
         if widget.save
-
             render json: widget
-
         else
-
             head :internal_server_error
-
         end
-
 
     end
 
@@ -435,14 +421,11 @@ Integration Test
 
     it "should create a new widget" do
 
-
         widget = { name: 'widgee', supplier: 'widgsoft', cost: 32 }
 
         post '/api/widgets', {widget: widget}
         assert last_response.successful?
         assert last_response_json['widget']['name'].must_equal 'widgee'
-
-
 
     end
 </code></pre>
@@ -457,17 +440,12 @@ Controller
 
     def update
 
-
         widget = Widget.find(params[:id])
 
         if widget.update_attributes(widgets_params_update)
-
             render json: widget
-
         else
-
             head :internal_server_error
-
         end
 
 
@@ -479,7 +457,6 @@ Controller
 Integration Test
 <pre><code>
     it "should get and update a widget" do
-
 
         widget = FactoryGirl.create(:widget)
 
@@ -494,13 +471,11 @@ Integration Test
         assert last_response.successful?
         assert last_response_json['widget']['supplier'].must_equal 'supplierX'
 
-
     end
 
 
 
     it "should get and update a widget, ensuring strong_params prevents name being updated" do
-
 
         widget = FactoryGirl.create(:widget)
 
@@ -516,7 +491,6 @@ Integration Test
 
         assert last_response.successful?
         assert last_response_json['widget']['name'].must_equal widget_original_name
-
 
     end
 
@@ -536,20 +510,14 @@ Controller<nr>
 
     def destroy
 
-
         return head :unauthorized unless (params.has_key?('auth_token') && params[:auth_token] == 's3cr3t')
-
 
         widget = Widget.find(params[:id])
 
         if widget.delete
-
             head :no_content
-
         else
-
             head :internal_server_error
-
         end
 
 
@@ -560,7 +528,6 @@ Controller<nr>
 Integration Test
 <pre><code>
     it "should get and delete a widget if authorized" do
-
 
         auth_token = 's3cr3t'
         widget = FactoryGirl.create(:widget)
@@ -577,7 +544,6 @@ Integration Test
         delete "/api/widgets/#{widget_id}", {auth_token: auth_token}
         assert last_response.successful?
         assert last_response.status.must_equal 204 #no_content
-
 
     end
 
